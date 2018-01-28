@@ -4,18 +4,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.alexlondon07.cardviewandreciclerview.models.Movie;
+
 public class MainActivity extends AppCompatActivity {
 
-    private List<String> names;
+    private List<Movie> movies;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private  RecyclerView.LayoutManager mLayoutManager;
@@ -26,17 +26,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        names = this.getAllNames();
+        movies = this.getAllMovies();
 
         recyclerView = findViewById(R.id.my_recycler_view);
-        mLayoutManager = new LinearLayoutManager(this);
+        //mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager = new GridLayoutManager(this, 2);
-        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        //mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
-        mAdapter = new MyAdapter(names, R.layout.recycler_view_item, new MyAdapter.OnItemClickListener() {
+        mAdapter = new MyAdapter(movies, R.layout.recycler_view_item, new MyAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(String name, int position) {
-                deleteName(position);
+            public void onItemClick(Movie movie, int position) {
+                //deleteName(position);
             }
         });
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.add_name:
-                this.addName(0);
+                //this.addName(0);
                 return true;
 
             default:
@@ -65,22 +65,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void addName(int position) {
-        names.add(position, "New name "+(++counter));
+    /*private void addName(int position) {
+        movies.add(position, "New movie "+(++counter));
         mAdapter.notifyItemInserted(position);
         mLayoutManager.scrollToPosition(position);
     }
 
     private void deleteName(int position){
-        names.remove(position);
+        movies.remove(position);
         mAdapter.notifyItemRemoved(position);
-    }
+    }*/
 
-    private List<String> getAllNames(){
-        return new ArrayList<String>(){{
-            add("Alexander");
-            add("Emiliana");
-            add("Estefany");
+    private List<Movie> getAllMovies(){
+        return new ArrayList<Movie>(){{
+            add(new Movie("12 Strong", R.drawable.poster));
+            add(new Movie("A Fantastic woman", R.drawable.poster1));
+            add(new Movie("Winkle Time", R.drawable.poster2));
+            add(new Movie("Act the violence ", R.drawable.poster3));
         }};
     }
 }
